@@ -1,168 +1,150 @@
-# ![](https://ga-dash.s3.amazonaws.com/production/assets/logo-9f88ae6c9c3871690e33280fcf557f33.png) Project 3: Web APIs & NLP
+## Problem Statement
 
-### Description
+There is a panel discussion happening in a university setting where there are two panels one focusing in Science and the other in Engineering. There are going to be live round of questions during the panel discussion and I have been tasked to create a model that can classify between the two categories (Science and Engineering) so that the questions can be directed to appropriate panels for answering/discussion.
 
-In week four we've learned about a few different classifiers. In week five we learned about webscraping, APIs, and Natural Language Processing (NLP). This project will put those skills to the test.
+The aim of this project is to create a classification model that has a classifcation accuracy of more than 85% and an f1score of more than 0.85.
 
-For project 3, your goal is two-fold:
-1. Using [Pushshift's](https://github.com/pushshift/api) API, you'll collect posts from two subreddits of your choosing.
-2. You'll then use NLP to train a classifier on which subreddit a given post came from. This is a binary classification problem.
+## Data Collection
 
-
-#### About the API
-
-Pushshift's API is fairly straightforward. For example, if I want the posts from [`/r/boardgames`](https://www.reddit.com/r/boardgames), all I have to do is use the following url: https://api.pushshift.io/reddit/search/submission?subreddit=boardgames
-
-To help you get started, we have a primer video on how to use the API: https://youtu.be/AcrjEWsMi_E
-
-**NOTE:** Pushshift now limits you to 100 posts per request (no longer the 500 in the screencast).
-
----
-
-### Requirements
-
-- Gather and prepare your data using the `requests` library.
-- **Create and compare two models**. Any two classifiers at least of your choosing: random forest, logistic regression, KNN, etc.
-- A Jupyter Notebook with your analysis for a peer audience of data scientists.
-- An executive summary of your results.
-- A short presentation outlining your process and findings for a semi-technical audience.
-
-**Pro Tip:** You can find a good example executive summary [here](https://www.proposify.biz/blog/executive-summary).
-
----
-
-### Necessary Deliverables / Submission
-
-- Code must be in at least one clearly commented Jupyter Notebook.
-- A readme/executive summary in markdown.
-- You must submit your slide deck as a PDF.
-- Materials must be submitted by **9:30 AM (PST) on Friday, Oct. 7th**.
-
----
-
-## Rubric
-Your instructors will evaluate your project (for the most part) using the following criteria.  You should make sure that you consider and/or follow most if not all of the considerations/recommendations outlined below **while** working through your project.
-
-For Project 3 the evaluation categories are as follows:<br>
-**The Data Science Process**
-- Problem Statement
-- Data Collection
-- Data Cleaning & EDA
-- Preprocessing & Modeling
-- Evaluation and Conceptual Understanding
-- Conclusion and Recommendations
-
-**Organization and Professionalism**
-- Organization
-- Visualizations
-- Python Syntax and Control Flow
-- Presentation
-
-**Scores will be out of 30 points based on the 10 categories in the rubric.** <br>
-*3 points per section*<br>
-
-| Score | Interpretation |
-| --- | --- |
-| **0** | *Project fails to meet the minimum requirements for this item.* |
-| **1** | *Project meets the minimum requirements for this item, but falls significantly short of portfolio-ready expectations.* |
-| **2** | *Project exceeds the minimum requirements for this item, but falls short of portfolio-ready expectations.* |
-| **3** | *Project meets or exceeds portfolio-ready expectations; demonstrates a thorough understanding of every outlined consideration.* |
+In order to build a classification model, we need Science and Engineering text data (best if in the form of questions) to train the model. Two subreddits- AskScience and AskEngineers contains large amounts of data related to the two target categories. For this project, the data was collect from these two subreddits via the Reddit pushiftAPI.
+In order to get as much text as possible, the subreddit submissions were filtered for the submissions that have both the title and the selftext(description/expansion of the title/question) during collection. A total of 5074 submissions were collected from each subreddit.
+The submission data from both the subreddits are saved in the datasets folder.
 
 
-### The Data Science Process
+## Data Cleaning and EDA
 
-**Problem Statement**
-- Is it clear what the goal of the project is?
-- What type of model will be developed?
-- How will success be evaluated?
-- Is the scope of the project appropriate?
-- Is it clear who cares about this or why this is important to investigate?
-- Does the student consider the audience and the primary and secondary stakeholders?
+Initial exploratory analysis was done on the submissions before any cleaning.
 
-**Data Collection**
-- Was enough data gathered to generate a significant result?
-- Was data collected that was useful and relevant to the project?
-- Was data collection and storage optimized through custom functions, pipelines, and/or automation?
-- Was thought given to the server receiving the requests such as considering number of requests per second?
+**Text Length and Word Count Comparision**
 
-**Data Cleaning and EDA**
-- Are missing values imputed/handled appropriately?
-- Are distributions examined and described?
-- Are outliers identified and addressed?
-- Are appropriate summary statistics provided?
-- Are steps taken during data cleaning and EDA framed appropriately?
-- Does the student address whether or not they are likely to be able to answer their problem statement with the provided data given what they've discovered during EDA?
+The distributions for the length of the submission text (title and selftext) as well as number of words in the submissions were visualized. The figure below shows the distribution of number of words in AskScience and AskEngineers submission:
 
-**Preprocessing and Modeling**
-- Is text data successfully converted to a matrix representation?
-- Are methods such as stop words, stemming, and lemmatization explored?
-- Does the student properly split and/or sample the data for validation/training purposes?
-- Does the student test and evaluate a variety of models to identify a production algorithm (**AT MINIMUM:** two models)?
-- Does the student defend their choice of production model relevant to the data at hand and the problem?
-- Does the student explain how the model works and evaluate its performance successes/downfalls?
+Figure 1
 
-**Evaluation and Conceptual Understanding**
-- Does the student accurately identify and explain the baseline score?
-- Does the student select and use metrics relevant to the problem objective?
-- Does the student interpret the results of their model for purposes of inference?
-- Is domain knowledge demonstrated when interpreting results?
-- Does the student provide appropriate interpretation with regards to descriptive and inferential statistics?
-
-**Conclusion and Recommendations**
-- Does the student provide appropriate context to connect individual steps back to the overall project?
-- Is it clear how the final recommendations were reached?
-- Are the conclusions/recommendations clearly stated?
-- Does the conclusion answer the original problem statement?
-- Does the student address how findings of this research can be applied for the benefit of stakeholders?
-- Are future steps to move the project forward identified?
+ ![This is an image](./images/word_count_distn.png)
 
 
-### Organization and Professionalism
+It is interesting to note from the above plot that there is much higher frequency for posts with more number of words for 'AskEngineers' subreddit. 
+Total no. of Words for AskScience: 444254, Total no. of Words for AskEngineers: 662051. This indicates that we have more text from AskEngineer subreddit. This might be becaue Engineering posts may need more text in general to descirbe a question compared to Science posts.
+The boxplots show some outliers in terms of the length of posts.
 
-**Project Organization**
-- Are modules imported correctly (using appropriate aliases)?
-- Are data imported/saved using relative paths?
-- Does the README provide a good executive summary of the project?
-- Is markdown formatting used appropriately to structure notebooks?
-- Are there an appropriate amount of comments to support the code?
-- Are files & directories organized correctly?
-- Are there unnecessary files included?
-- Do files and directories have well-structured, appropriate, consistent names?
+**No. of authors in each category**
+There are almost equal number of authors in each subreddit (AskScience: 4433, AskEngineers: 4009) and there is no overlap of authors between the two subreddits.
 
-**Visualizations**
-- Are sufficient visualizations provided?
-- Do plots accurately demonstrate valid relationships?
-- Are plots labeled properly?
-- Are plots interpreted appropriately?
-- Are plots formatted and scaled appropriately for inclusion in a notebook-based technical report?
+**Subreddit submission activity**
+Subreddit submission activity like posts per hour, no. of comments etc. was anlayzed for both the subreddits. 
+Some of the interesting observations from the statistical information are:    
 
-**Python Syntax and Control Flow**
-- Is care taken to write human readable code?
-- Is the code syntactically correct (no runtime errors)?
-- Does the code generate desired results (logically correct)?
-- Does the code follows general best practices and style guidelines?
-- Are Pandas functions used appropriately?
-- Are `sklearn` and `NLTK` methods used appropriately?
+**1.** The range of created UTC (max-min) for same no. of posts is small for AskEngineers subreddit compared to AskScience, indicating **more posts with selftext per hour for ASkEngineers compared to AskScience**. (This could also mean authors in AskScience dont like to write much self text in  their submissions.). Converting Epoch time range to hours, it appears that there is 1 post/hour with Selftext for AskEngineers whereas 1 post every 10hours for Ask Science.  
+  
+**2.** Average word count per post (including title and Selftext) is **88** for a submission in AskScience whereas it is **131** for AskEngineers.
 
-**Presentation**
-- Is the problem statement clearly presented?
-- Does a strong narrative run through the presentation building toward a final conclusion?
-- Are the conclusions/recommendations clearly stated?
-- Is the level of technicality appropriate for the intended audience?
-- Is the student substantially over or under time?
-- Does the student appropriately pace their presentation?
-- Does the student deliver their message with clarity and volume?
-- Are appropriate visualizations generated for the intended audience?
-- Are visualizations necessary and useful for supporting conclusions/explaining findings?
+**3.** Compairsion of number of comments for the two subreddits
+From the statistical analysis it seems that average number of comments are much higher for AskScience (average-45, count ranging from 0 to 3395) posts compared to AskEngineers (average-0.01, count ranging from 0 to only 14).  
+It is interesting to note the trend because it may mean that Science topics usually require more discussion, and opinions whereas engineering topics usually have straight forward answers. This is an interesting insight for the panel discussion, as it indicates how the discussion on these two topics may go in real time as well. 
+
+Figure 2
+
+ ![This is an image](./images/no_comments_sc_distn.png)
+ 
+ 
+Figure 3
+
+ ![This is an image](./images/no_comments_engg_distn.png)
+ 
+After this intial EDA, the text was analyzed. Looking at the text of several posts, there were noticable occurances of URLs, string patterns, new line, special characters etc. The data was cleaned to remove these. Also, float numbers, equations and dimensions are present in AskScience and AskEngineers submissions. In order to keep this information, these patterns were defined as 'floatnum','euqation' and 'dimension' etc. during the cleaning process. After cleaning the text, it was lemmatized and the stop words (words that are insignificant to the context like is, are etc.) were removed.
+ 
+**EDA on Most Frequent Words**
+There are about **28256** unique words in the whole dataset inclusing both the subreddits
+The plots below show most frequent words for the two subreddits. AskScience has words like earth, light, energy as most frequent whereas Engineering has engineering, engineer, work, job, company etc. Both subreddits also have common words like 'like', use, know etc.
+
+Figure 4
+
+![This is an image](./images/freq_words_sc.png)
 
 
----
+Figure 5
 
-### Why did we choose this project for you?
-This project covers three of the biggest concepts we cover in the class: Classification Modeling, Natural Language Processing and Data Wrangling/Acquisition.
+![This is an image](./images/freq_words_engg.png)
 
-Part 1 of the project focuses on **Data wrangling/gathering/acquisition**. This is a very important skill as not all the data you will need will be in clean CSVs or a single table in SQL.  There is a good chance that wherever you land you will have to gather some data from some unstructured/semi-structured sources; when possible, requesting information from an API, but sometimes scraping it because they don't have an API (or it's terribly documented).
+It is to be noted that overall the total word count for most frequent words is much higher in AskEngineers indicating again that there is much more text data for subreddit AskEngineers than AskScience. 
 
-Part 2 of the project focuses on **Natural Language Processing** and converting standard text data (like Titles and Comments) into a format that allows us to analyze it and use it in modeling.
 
-Part 3 of the project focuses on **Classification Modeling**.  Given that project 2 was a regression focused problem, we needed to give you a classification focused problem to practice the various models, means of assessment and preprocessing associated with classification.   
+**Unique words in each subreddit**
+Plot below shows count of unique words in each subreddit. It is to be noted that out of about 28,256 total words, 10,998 are unique to AskScience and 9842 are unique to AskEngineers, and about 7416 are common.  
+It is also to be noted that there was much more text (title and self-text) from AskEngineering compared to AskScience but we have more unique words for AskScience than AskEngineers. This maybe because Science in general contains different fields that include Biology, Physics, Chemistry, Astronomy and Earth Science etc. Engineering is more applied mathematics and science.
+
+Figure 6
+
+![This is an image](./images/unique_word_count.png)
+ 
+ 
+The list shown below contains the most frequent 20 unique words in the two subreddits. The words in AskScience are more medicine/biology related like vaccine, virus etc, whereas AskEngineers has wrds like civil,ee,units-mm etc.
+
+
+![This is an image](./images/unique_words.png)
+
+From the exploratory data anlaysis, it seems like we have enough text from both the subreddits and enough unique words that we should be able to build a model to classify the two subreddits.
+
+## Preprocessing and Modeling
+
+The whole dataset containing text from both the subreddits was split into train and test dataset with equal split of both the subreddits. 
+Both the train and test text data was cleaned for the URLs, special characters etc. and substitues were made for special patterns like equation etc. After this, the data was lemmatized and the stop words were removed.
+The training data was used to train the model. With the goal of a good classification model, several different modeling techniques were attempted including Naive Bayes, Random Forest, AdaBoost, Logistic Regression and K-nearest neighbors. The models were evaluated in terms of accuracy and f1-scores.
+Below is a summary of the model evaluation metrics:
+
+Figure 7
+
+![This is an image](./images/model_evaluation.png)
+
+Considering f1-score as our final evaluation metrics, summary of model performance:
+
+1. Naive Bayes with cvec: high testing score- 0.92 with a difference between training and testing score of about 0.032 
+2. Naive Bayes with Tfidf: very comparable to Naive Bayes with cvec, testing score- 0.92 with a train and test difference of 0.031
+3. Random Forest: very overfit model with 0.99 training score and 0.9 testing score
+4. Logistic Regression: high training score-0.96 but lower testing score-0.92 compared to Naive Bayes, slightly more overfit than Naive Bayes
+5. Ada Boost: Not overfit (difference between training and testing score is 0.01) but low scores (training-0.91, testing-0.89)
+6. K-nearest neighbors: Less overfit (difference between training and testing score is 0.02) but lower testing score compared to Naive Bayes (0.89) 
+
+
+All the models except for Random Forest are very close to each other in performance. Naive Bayes with Tfidf (Model 2) has the highest accuracy score (0.92(92%)) and f1 score (training-0.95, testing-0.92) along with being one of the less overfit models.  
+This model meets our criteria (>85% accuracy and f1-score) and is one of the best performing models so it will be selected as production model.
+
+## Production Model and further evaluation
+
+The production model was further evaluated to understand the accuracy and misclassification.
+The figure below shows the confusion matrix giving percentage of true and false, positives and negatives. 
+
+Figure 8
+
+![This is an image](./images/confusion_matrix.png)
+
+Specificity: 0.91
+Recall score/Sensitivity: 0.93
+Precision score: 0.91
+Balanced accuracy: 0.92
+
+The model is predicitng 93% of negatives (AskEngineers) correctly and 91% of positives (AskScience) correctly and has 7.8% misclassification. 
+It has more false positives (0.09%) than false negatives(0.07%) , and higher sensitivity meaning that it is more inclined to give false positives and predict a query/submission belonging to class- AskScience (value 1).
+The Balanced accuracy is 0.92 which gives good confidence in calssification accuracy for both the classes.
+The ROC AUC curve shown below indicates that we have good separation of the two classes.
+
+Figure 9
+
+![This is an image](./images/roc_auc.png)
+
+**Misclassification EDA**
+About 7.8% submissions (198/2537) were misclassified in the test set. 
+On looking at the text of some misclassified posts, it appears that a lot of posts that are getting misclassified have physics or engineering related text. Since Physics is a branch of science, and is the foundation of Engineering there is an overlap of text which is making it difficult to correclty classify. Also sometime, the author may have asked 'engineering' query in the AskScience forum.
+
+
+## Conclusion and Recommendations
+
+We have successfully trained a model to classify between the Science and Engineering queries using the data from two subreddits- AskScience and AskEngineers. 
+This production model has testing accuracy of 92% and testing f1-score of 0.92 which meets our criteria for acceptable model. It also has a balanced accuracy score of 0.92 which indicates good classificaiton accuracy for both the classes. 
+This model will be recommended to the University to use during their panel discussion to classify the questions in two categories-Science and Egnineering.
+
+## Next Steps
+
+The model has good f1 score and balanced accuracy but it still has false positives and false negatives. Since this model needs accuracy for both the classes, it would be good to tune the model to reduce both false positives and false negatives. Next steps would be to look at the text again and see if we can identify some patterns in misclassified posts, clean/process the data some more and tune the models to reduce false positives as well as false negatives. 
+
