@@ -1,8 +1,8 @@
 ## Problem Statement
 
-There is a panel discussion happening in a university setting where there are two panels one focusing in Science and the other in Engineering. There are going to be live round of questions during the panel discussion and I have been tasked to create a model that can classify between the two categories (Science and Engineering) so that the questions can be directed to appropriate panels for answering/discussion.
+A university is organizing a panel discussion with experts in Science and Engineering. There are going to be live round of questions from in-person as well as remote audience during the panel discussion. There is going to be electronic entry of queries from remote audience as well as optionally from in-person audience. I have been tasked to create a model that can classify the electronically entered questions between the two categories (Science and Engineering) for the moderator so that the questions can be directed to appropriate experts for answering/discussion.
 
-The aim of this project is to create a classification model that has a classifcation accuracy of more than 85% and an f1score of more than 0.85.
+The aim of this project is to create a classification model for Science and Engineering categories that has a classifcation accuracy of more than 85% and an f1-score of more than 0.85.
 
 ## Data Collection
 
@@ -42,13 +42,14 @@ Some of the interesting observations from the statistical information are:
 **2.** Average word count per post (including title and Selftext) is **88** for a submission in AskScience whereas it is **131** for AskEngineers.
 
 **3.** Compairsion of number of comments for the two subreddits
-From the statistical analysis it seems that average number of comments are much higher for AskScience (average-45, count ranging from 0 to 3395) posts compared to AskEngineers (average-0.01, count ranging from 0 to only 14).  
+From the statistical analysis it seems that average number of comments are much higher for AskScience (average:45, count ranging from 0 to 3395) posts compared to AskEngineers (average:0.01, count ranging from 0 to only 14).  
 It is interesting to note the trend because it may mean that Science topics usually require more discussion, and opinions whereas engineering topics usually have straight forward answers. This is an interesting insight for the panel discussion, as it indicates how the discussion on these two topics may go in real time as well. 
 
 Figure 2
 
  ![This is an image](./images/no_comments_sc_distn.png)
  
+This figure is zoomed in to visulaize the distribution for less than 100 comments better, actual distribution ranges from 0 to 3395.
  
 Figure 3
 
@@ -57,6 +58,7 @@ Figure 3
 After this intial EDA, the text was analyzed. Looking at the text of several posts, there were noticable occurances of URLs, string patterns, new line, special characters etc. The data was cleaned to remove these. Also, float numbers, equations and dimensions are present in AskScience and AskEngineers submissions. In order to keep this information, these patterns were defined as 'floatnum','euqation' and 'dimension' etc. during the cleaning process. After cleaning the text, it was lemmatized and the stop words (words that are insignificant to the context like is, are etc.) were removed.
  
 ### EDA on Most Frequent Words  
+
 There are about **28256** unique words in the whole dataset inclusing both the subreddits
 The plots below show most frequent words for the two subreddits. AskScience has words like earth, light, energy as most frequent whereas Engineering has engineering, engineer, work, job, company etc. Both subreddits also have common words like 'like', use, know etc.
 
@@ -73,7 +75,9 @@ It is to be noted that overall the total word count for most frequent words is m
 
 
 ### Unique words in each subreddit  
-Plot below shows count of unique words in each subreddit. It is to be noted that out of about 28,256 total words, 10,998 are unique to AskScience and 9842 are unique to AskEngineers, and about 7416 are common.  
+
+Plot below shows count of unique words in each subreddit. It is to be noted that out of about 28,256 total words, **10,998 are unique to AskScience and 9842 are unique to AskEngineers**, and about 7416 are common.  
+
 It is also to be noted that there was much more text (title and self-text) from AskEngineering compared to AskScience but we have more unique words for AskScience than AskEngineers. This maybe because Science in general contains different fields that include Biology, Physics, Chemistry, Astronomy and Earth Science etc. Engineering is more applied mathematics and science.
 
 Figure 6
@@ -99,15 +103,15 @@ Below is a summary of the model evaluation metrics:
 
 Considering f1-score as our final evaluation metrics, summary of model performance:
 
-1. Naive Bayes with cvec: high testing score- 0.92 with a difference between training and testing score of about 0.032 
-2. Naive Bayes with Tfidf: very comparable to Naive Bayes with cvec, testing score- 0.92 with a train and test difference of 0.031
+1. Naive Bayes with cvec: high testing score: 0.92 with a difference between training and testing score of about 0.032 
+2. Naive Bayes with Tfidf: very comparable to Naive Bayes with cvec, testing score: 0.92 with a train and test difference of 0.031
 3. Random Forest: very overfit model with 0.99 training score and 0.9 testing score
-4. Logistic Regression: high training score-0.96 but lower testing score-0.92 compared to Naive Bayes, slightly more overfit than Naive Bayes
-5. Ada Boost: Not overfit (difference between training and testing score is 0.01) but low scores (training-0.91, testing-0.89)
+4. Logistic Regression: high training score: 0.96 but lower testing score: 0.92 compared to Naive Bayes, slightly more overfit than Naive Bayes
+5. Ada Boost: Not overfit (difference between training and testing score is 0.01) but low scores (training: 0.91, testing: 0.89)
 6. K-nearest neighbors: Less overfit (difference between training and testing score is 0.02) but lower testing score compared to Naive Bayes (0.89) 
 
 
-All the models except for Random Forest are very close to each other in performance. Naive Bayes with Tfidf (Model 2) has the highest accuracy score (0.92(92%)) and f1 score (training-0.95, testing-0.92) along with being one of the less overfit models.  
+All the models except for Random Forest are very close to each other in performance. Naive Bayes with Tfidf (Model 2) has the highest accuracy score (0.92(92%)) and f1 score (training: 0.95, testing: 0.92) along with being one of the less overfit models.  
 This model meets our criteria (>85% accuracy and f1-score) and is one of the best performing models so it will be selected as production model.
 
 ## Production Model and further evaluation
@@ -124,8 +128,8 @@ Recall score/Sensitivity: 0.93
 Precision score: 0.91
 Balanced accuracy: 0.92
 
-The model is predicitng 93% of negatives (AskEngineers) correctly and 91% of positives (AskScience) correctly and has 7.8% misclassification. 
-It has more false positives (0.09%) than false negatives(0.07%) , and higher sensitivity meaning that it is more inclined to give false positives and predict a query/submission belonging to class- AskScience (value 1).
+The model is predicitng 91% of negatives (AskEngineers) correctly and 93% of positives (AskScience) correctly and has 7.8% misclassification. 
+It has more false positives (114) than false negatives (184), and higher sensitivity meaning that it is more inclined to give false positives and predict a query/submission belonging to class- AskScience (value 1).
 The Balanced accuracy is 0.92 which gives good confidence in calssification accuracy for both the classes.
 The ROC AUC curve shown below indicates that we have good separation of the two classes.
 
@@ -134,6 +138,7 @@ Figure 9
 ![This is an image](./images/roc_auc.png)
 
 ### Misclassification EDA  
+
 About 7.8% submissions (198/2537) were misclassified in the test set. 
 On looking at the text of some misclassified posts, it appears that a lot of posts that are getting misclassified have physics or engineering related text. Since Physics is a branch of science, and is the foundation of Engineering there is an overlap of text which is making it difficult to correclty classify. Also sometime, the author may have asked 'engineering' query in the AskScience forum.
 
@@ -142,7 +147,7 @@ On looking at the text of some misclassified posts, it appears that a lot of pos
 
 We have successfully trained a model to classify between the Science and Engineering queries using the data from two subreddits- AskScience and AskEngineers. 
 This production model has testing accuracy of 92% and testing f1-score of 0.92 which meets our criteria for acceptable model. It also has a balanced accuracy score of 0.92 which indicates good classificaiton accuracy for both the classes. 
-This model will be recommended to the University to use during their panel discussion to classify the questions in two categories-Science and Egnineering.
+This model will be recommended to the University to use during their panel discussion to classify the questions in two categories-Science and Engineering.
 
 ## Next Steps
 
