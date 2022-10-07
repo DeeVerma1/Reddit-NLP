@@ -2,7 +2,7 @@
 
 A university is organizing a panel discussion with experts in Science and Engineering. There are going to be live round of questions from in-person as well as remote audience during the panel discussion. There is going to be electronic entry of queries from remote audience as well as optionally from in-person audience. I have been tasked to create a model that can classify the electronically entered questions between the two categories (Science and Engineering) for the moderator so that the questions can be directed to appropriate experts for answering/discussion.
 
-The aim of this project is to create a classification model for Science and Engineering categories that has a classifcation accuracy of more than 85% and an f1-score of more than 0.85.
+The aim of this project is to create a classification model for Science and Engineering categories that has a classifcation accuracy of more than 85% and an f1-score of more than 0.85. f1-score will be important to see here as we want both our classes classified as correctly as possible.
 
 ## Data Collection
 
@@ -42,8 +42,8 @@ Some of the interesting observations from the statistical information are:
 **2.** Average word count per post (including title and Selftext) is **88** for a submission in AskScience whereas it is **131** for AskEngineers.
 
 **3.** Compairsion of number of comments for the two subreddits
-From the statistical analysis it seems that average number of comments are much higher for AskScience (average:45, count ranging from 0 to 3395) posts compared to AskEngineers (average:0.01, count ranging from 0 to only 14).  
-It is interesting to note the trend because it may mean that Science topics usually require more discussion, and opinions whereas engineering topics usually have straight forward answers. This is an interesting insight for the panel discussion, as it indicates how the discussion on these two topics may go in real time as well. 
+From the statistical analysis it seems that average number of comments are much higher for AskScience (average:45, count ranging from 0 to 3395) posts compared to AskEngineers (average:0.01, count ranging from 0 to only 14). The figures below show the distributions for number of comments. 
+
 
 Figure 2
 
@@ -54,6 +54,8 @@ This figure is zoomed in to visulaize the distribution for less than 100 comment
 Figure 3
 
  ![This is an image](./images/no_comments_engg_distn.png)
+ 
+The distribution plots shown above visually indicates that there are many more no. of comments for an Askscience submission compared to AskEngineers which might be because an answer to a science question is usually a discussion whereas answers to Engineering questions could be straight forward. This is an interesting insight for the panel discussion, as it indicates how the discussion on these two topics may go in real time as well. 
  
 After this intial EDA, the text was analyzed. Looking at the text of several posts, there were noticable occurances of URLs, string patterns, new line, special characters etc. The data was cleaned to remove these. Also, float numbers, equations and dimensions are present in AskScience and AskEngineers submissions. In order to keep this information, these patterns were defined as 'floatnum','euqation' and 'dimension' etc. during the cleaning process. After cleaning the text, it was lemmatized and the stop words (words that are insignificant to the context like is, are etc.) were removed.
  
