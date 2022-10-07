@@ -15,7 +15,7 @@ The submission data from both the subreddits are saved in the datasets folder.
 
 Initial exploratory analysis was done on the submissions before any cleaning.
 
-**Text Length and Word Count Comparision**  
+### Text Length and Word Count Comparision  
   
 The distributions for the length of the submission text (title and selftext) as well as number of words in the submissions were visualized. The figure below shows the distribution of number of words in AskScience and AskEngineers submission:
 
@@ -28,10 +28,12 @@ It is interesting to note from the above plot that there is much higher frequenc
 Total no. of Words for AskScience: 444254, Total no. of Words for AskEngineers: 662051. This indicates that we have more text from AskEngineer subreddit. This might be becaue Engineering posts may need more text in general to descirbe a question compared to Science posts.
 The boxplots show some outliers in terms of the length of posts.
 
-**No. of authors in each category**  
+### No. of authors in each category   
+
 There are almost equal number of authors in each subreddit (AskScience: 4433, AskEngineers: 4009) and there is no overlap of authors between the two subreddits.
 
-**Subreddit submission activity**  
+### Subreddit submission activity
+
 Subreddit submission activity like posts per hour, no. of comments etc. was anlayzed for both the subreddits. 
 Some of the interesting observations from the statistical information are:    
 
@@ -54,7 +56,7 @@ Figure 3
  
 After this intial EDA, the text was analyzed. Looking at the text of several posts, there were noticable occurances of URLs, string patterns, new line, special characters etc. The data was cleaned to remove these. Also, float numbers, equations and dimensions are present in AskScience and AskEngineers submissions. In order to keep this information, these patterns were defined as 'floatnum','euqation' and 'dimension' etc. during the cleaning process. After cleaning the text, it was lemmatized and the stop words (words that are insignificant to the context like is, are etc.) were removed.
  
-**EDA on Most Frequent Words**  
+### EDA on Most Frequent Words  
 There are about **28256** unique words in the whole dataset inclusing both the subreddits
 The plots below show most frequent words for the two subreddits. AskScience has words like earth, light, energy as most frequent whereas Engineering has engineering, engineer, work, job, company etc. Both subreddits also have common words like 'like', use, know etc.
 
@@ -70,7 +72,7 @@ Figure 5
 It is to be noted that overall the total word count for most frequent words is much higher in AskEngineers indicating again that there is much more text data for subreddit AskEngineers than AskScience. 
 
 
-**Unique words in each subreddit**  
+### Unique words in each subreddit  
 Plot below shows count of unique words in each subreddit. It is to be noted that out of about 28,256 total words, 10,998 are unique to AskScience and 9842 are unique to AskEngineers, and about 7416 are common.  
 It is also to be noted that there was much more text (title and self-text) from AskEngineering compared to AskScience but we have more unique words for AskScience than AskEngineers. This maybe because Science in general contains different fields that include Biology, Physics, Chemistry, Astronomy and Earth Science etc. Engineering is more applied mathematics and science.
 
@@ -131,7 +133,7 @@ Figure 9
 
 ![This is an image](./images/roc_auc.png)
 
-**Misclassification EDA**  
+### Misclassification EDA  
 About 7.8% submissions (198/2537) were misclassified in the test set. 
 On looking at the text of some misclassified posts, it appears that a lot of posts that are getting misclassified have physics or engineering related text. Since Physics is a branch of science, and is the foundation of Engineering there is an overlap of text which is making it difficult to correclty classify. Also sometime, the author may have asked 'engineering' query in the AskScience forum.
 
