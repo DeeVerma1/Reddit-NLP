@@ -139,6 +139,9 @@ Figure 9
 
 ![This is an image](./images/roc_auc.png)
 
+**Feature importance insight**  
+To gain an insight on what features are important for classification, Model 4 Logistic Regression, which was close to our production model in performance, was used to look at top 5 significant words. Words like earth, human, electron, animal, happen are significant for classificaiton of a post in AskScience whereas words like engineer, design, company, job, want are significant for classification as AskEngineers. 
+
 ### Misclassification EDA  
 
 About 7.8% submissions (198/2537) were misclassified in the test set. 
