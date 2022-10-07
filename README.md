@@ -125,11 +125,11 @@ Figure 8
 
 ![This is an image](./images/confusion_matrix.png)
 
-Specificity: 0.91
-Recall score/Sensitivity: 0.93
-Precision score: 0.91
-Balanced accuracy: 0.92
-
+Specificity: 0.91  
+Recall score/Sensitivity: 0.93  
+Precision score: 0.91  
+Balanced accuracy: 0.92  
+  
 The model is predicitng 91% of 0s (AskEngineers) correctly and 93% of 1s (AskScience) correctly and has 7.8% misclassification. 
 It has more false positives (114) than false negatives (184), and higher sensitivity meaning that it is more inclined to give false positives and predict a query/submission belonging to class- AskScience (value 1).
 The Balanced accuracy is 0.92 which gives good confidence in calssification accuracy for both the classes.
